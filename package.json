@@ -1,0 +1,32 @@
+{
+  "name": "live-signal-trading-system",
+  "version": "1.0.0",
+  "description": "Live Signal Trading System for Indian Markets with TradingView and Screener Integration",
+  "scripts": {
+    "install:all": "npm run install:apps && npm run install:dashboard",
+    "install:apps": "cd apps/market-data-collector && npm install && cd ../tradingview-integration && npm install && cd ../screener-integration && npm install && cd ../signal-engine && npm install && cd ../breakout-analysis && npm install",
+    "install:dashboard": "cd dashboard && npm install",
+    "build:all": "npm run build:apps",
+    "build:apps": "cd apps/market-data-collector && npm run build && cd ../tradingview-integration && npm run build && cd ../screener-integration && npm run build && cd ../signal-engine && npm run build && cd ../breakout-analysis && npm run build",
+    "start:market-data": "cd apps/market-data-collector && npm run dev",
+    "start:tradingview": "cd apps/tradingview-integration && npm run dev",
+    "start:screener": "cd apps/screener-integration && npm run dev",
+    "start:signal-engine": "cd apps/signal-engine && npm run dev",
+    "start:breakout": "cd apps/breakout-analysis && npm run dev",
+    "start:dashboard": "cd dashboard && npm start",
+    "dev": "echo 'Starting all services...' && npm run dev:services",
+    "dev:services": "concurrently \"npm run start:market-data\" \"npm run start:tradingview\" \"npm run start:screener\" \"npm run start:signal-engine\" \"npm run start:breakout\"",
+    "test:health": "curl -f http://localhost:3001/health && curl -f http://localhost:3002/health",
+    "logs": "echo 'Check individual service logs in their respective directories'",
+    "clean": "rm -rf apps/*/node_modules apps/*/dist dashboard/node_modules dashboard/build",
+    "setup": "npm run install:all && npm run build:all"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "license": "MIT"
+}
